@@ -1,0 +1,12 @@
+FROM --platform=linux/amd64 ubuntu:20.04
+
+RUN apt-get update
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y automake libtool build-essential
+
+ADD . /repo
+WORKDIR /repo/libmspack
+RUN ./autogen.sh
+RUN ./configure
+RUN make -j8
+ENV LD_LIBRARY_PATH=/repo/libmspack/.libs
+RUN ldconfig
