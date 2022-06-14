@@ -1,4 +1,4 @@
-project: rnshah9/libmspack
+project: libmspack
 target: msexpand
 
 cmds:
