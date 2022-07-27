@@ -3,19 +3,13 @@ FROM --platform=linux/amd64 ubuntu:20.04 as builder
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y automake libtool build-essential
 
-ADD . /repo
+COPY . /repo
 WORKDIR /repo/libmspack
 RUN ./autogen.sh
-RUN ./configure
+RUN ./configure --prefix=/install
 RUN make -j8
-ENV LD_LIBRARY_PATH=/repo/libmspack/.libs
-RUN ldconfig
-
-RUN mkdir -p /deps
-RUN ldd /repo/libmspack/examples/.libs/msexpand | tr -s '[:blank:]' '\n' | grep '^/' | xargs -I % sh -c 'cp % /deps;'
+RUN make install
 
 FROM ubuntu:20.04 as package
-
-COPY --from=builder /deps /deps
-COPY --from=builder /repo/libmspack/examples/.libs/msexpand /repo/libmspack/examples/.libs/msexpand
-ENV LD_LIBRARY_PATH=/deps
+COPY --from=builder /install /install
+COPY --from=builder /repo/libmspack/examples/.libs/msexpand /
