@@ -1,0 +1,5 @@
+project: libmspack
+target: msexpand
+
+cmds:
+  - cmd: /msexpand @@ out
