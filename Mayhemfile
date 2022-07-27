@@ -2,4 +2,4 @@ project: libmspack
 target: msexpand
 
 cmds:
-  - cmd: /repo/libmspack/examples/.libs/msexpand @@ out
+  - cmd: /msexpand @@ out
