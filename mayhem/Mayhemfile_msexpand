@@ -1,0 +1,11 @@
+# Target name preserved from the original mayhemheroes integration (`msexpand @@ out`, the
+# examples/msexpand.c CLI) so the Mayhem run history stays continuous. The old raw file-input CLI
+# wrote its output arg to a relative path (fails under Mayhem's read-only image mount); this is now
+# an in-process libFuzzer harness over the SAME code path — SZDD decompress, falling back to KWAJ
+# on a signature mismatch, exactly like msexpand.c — fed from memory (mayhem/fuzz_msexpand.c).
+project: libmspack
+target: msexpand
+
+cmds:
+  - cmd: /mayhem/msexpand-fuzz
+    libfuzzer: true

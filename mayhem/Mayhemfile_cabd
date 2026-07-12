@@ -1,0 +1,11 @@
+# In-process libFuzzer harness for libmspack's CAB decompressor (mscab_decompressor): the MSCF
+# cabinet parser plus the MSZIP/LZX/Quantum decoders — the richest libmspack format. Opens the
+# fuzz input as a cabinet from memory and extracts every file to an in-memory sink
+# (mayhem/fuzz_cabd.c). This is an ADDED target (the original integration shipped only msexpand);
+# CAB is libmspack's flagship format and gives the fuzzer far more reachable code.
+project: libmspack
+target: cabd
+
+cmds:
+  - cmd: /mayhem/cabd-fuzz
+    libfuzzer: true
